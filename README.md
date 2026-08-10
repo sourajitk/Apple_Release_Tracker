@@ -1,4 +1,4 @@
-# 📱💻 Apple iOS & macOS Release Tracker Telegram Bot
+# Apple iOS & macOS Release Tracker Telegram Bot
 
 A Python-based Telegram bot designed to detect and alert you instantly when new **iOS** and **macOS** Developer Betas, Public Betas, and Official releases land.
 
@@ -6,19 +6,19 @@ Built with `python-telegram-bot` and containerized with **Docker** & **Docker Co
 
 ---
 
-## ✨ Features
+## Features
 
-- 🚨 **Instant Release Detection**: Automatically monitors official Apple Developer Release feeds and IPSW feeds.
-- 📱💻 **Target Platforms**: Filters for iOS & macOS releases (with customizable support for iPadOS, watchOS, visionOS, tvOS, and Xcode).
-- 🏷 **Channel Identification**: Detects Developer Betas, Public Betas, Release Candidates (RC), and Stable releases.
-- 🔢 **Build Numbers**: Extracts build tags (e.g. `22C5125e`) and direct links to Apple release notes & downloads.
-- 👥 **Multi-Chat Subscriptions**: Broadcasts to configured channel IDs and any user/group that runs `/start` or `/subscribe`.
-- 💾 **Persistent SQLite State**: Prevents duplicate notifications even across container restarts.
-- 🐳 **Docker Ready**: Production container setup with non-root security and volume persistence.
+- **Instant Release Detection**: Automatically monitors official Apple Developer Release feeds and IPSW feeds.
+- **Target Platforms**: Filters for iOS & macOS releases (with customizable support for iPadOS, watchOS, visionOS, tvOS, and Xcode).
+- **Channel Identification**: Detects Developer Betas, Public Betas, Release Candidates (RC), and Stable releases.
+- **Build Numbers**: Extracts build tags (e.g. `22C5125e`) and direct links to Apple release notes & downloads.
+- **Multi-Chat Subscriptions**: Broadcasts to configured channel IDs and any user/group that runs `/start` or `/subscribe`.
+- **Persistent SQLite State**: Prevents duplicate notifications even across container restarts.
+- **Docker Ready**: Production container setup with non-root security and volume persistence.
 
 ---
 
-## 🛠 Telegram Bot Commands
+## Telegram Bot Commands
 
 | Command | Description |
 |---|---|
@@ -32,7 +32,7 @@ Built with `python-telegram-bot` and containerized with **Docker** & **Docker Co
 
 ---
 
-## 🚀 Deployment with Docker Compose (Recommended)
+## Deployment with Docker Compose (Recommended)
 
 ### 1. Clone & Set Up Configuration
 
@@ -76,7 +76,7 @@ docker-compose down
 
 ---
 
-## 💻 Running Without Docker (Local Python)
+## Running Without Docker (Local Python)
 
 ### 1. Requirements
 
@@ -100,7 +100,7 @@ python3 main.py
 
 ---
 
-## ⚙️ Environment Variables Reference
+## Environment Variables Reference
 
 | Variable | Default | Description |
 |---|---|---|
@@ -115,6 +115,6 @@ python3 main.py
 
 ---
 
-## 📄 License
+## License
 
 MIT License. Feel free to modify and adapt for your workflow!
