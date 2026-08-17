@@ -48,6 +48,21 @@ class AppleDevScraper:
 
         return raw_items
 
+    @staticmethod
+    def parse_pub_date_from_link(link: str) -> str:
+        """Extracts publication date from Apple release link ID parameter (e.g. ?id=08102026f -> RFC2822 date)."""
+        match = re.search(r'id=(\d{2})(\d{2})(\d{4})', link)
+        if not match:
+            return ""
+        try:
+            month, day, year = int(match.group(1)), int(match.group(2)), int(match.group(3))
+            import datetime
+            import email.utils
+            dt = datetime.datetime(year, month, day, 10, 0, 0, tzinfo=datetime.timezone(datetime.timedelta(hours=-7)))
+            return email.utils.format_datetime(dt)
+        except Exception:
+            return ""
+
     async def fetch_html_feed(self) -> List[Dict[str, Any]]:
         """Scrapes the live HTML news releases page for zero-delay instant detection."""
         raw_items: List[Dict[str, Any]] = []
@@ -65,11 +80,12 @@ class AppleDevScraper:
                     if not title:
                         continue
 
+                    pub_date = self.parse_pub_date_from_link(link)
                     raw_items.append({
                         "id": link,
                         "title": title,
                         "link": link,
-                        "pub_date": ""
+                        "pub_date": pub_date
                     })
         except Exception as e:
             logger.error("Error fetching HTML feed %s: %s", self.APPLE_DEVELOPER_HTML, e)
