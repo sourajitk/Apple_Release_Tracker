@@ -27,9 +27,18 @@ class Database:
         return conn
 
     def _init_db(self):
-        """Initializes database schema tables for seen releases and subscribers."""
+        """Initializes database schema tables for seen releases and subscribers with automatic migration."""
         with self._get_connection() as conn:
             cursor = conn.cursor()
+
+            # Migrate legacy column 'id' to 'release_id' if present
+            cursor.execute("PRAGMA table_info(seen_releases)")
+            cols = [row[1] for row in cursor.fetchall()]
+            if cols and "id" in cols and "release_id" not in cols:
+                logger.info("Migrating seen_releases schema: renaming column 'id' to 'release_id'")
+                cursor.execute("ALTER TABLE seen_releases RENAME COLUMN id TO release_id")
+                conn.commit()
+
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS seen_releases (
                     release_id TEXT PRIMARY KEY,
