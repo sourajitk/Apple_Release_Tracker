@@ -279,7 +279,7 @@ class TelegramBotService:
         async def post_init(application: Application):
             logger.info("Performing initial feed scan to populate releases database...")
             try:
-                await self.run_check_and_notify(broadcast=False)
+                await self.run_check_and_notify(broadcast=True)
             except Exception as e:
                 logger.error("Initial feed scan error: %s", e)
 
