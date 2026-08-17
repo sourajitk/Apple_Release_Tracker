@@ -31,12 +31,21 @@ class Database:
         with self._get_connection() as conn:
             cursor = conn.cursor()
 
-            # Migrate legacy column 'id' to 'release_id' if present
+            # Migrate legacy columns if present
             cursor.execute("PRAGMA table_info(seen_releases)")
             cols = [row[1] for row in cursor.fetchall()]
             if cols and "id" in cols and "release_id" not in cols:
                 logger.info("Migrating seen_releases schema: renaming column 'id' to 'release_id'")
                 cursor.execute("ALTER TABLE seen_releases RENAME COLUMN id TO release_id")
+                conn.commit()
+
+            if cols and "first_seen_at" in cols and "created_at" not in cols:
+                logger.info("Migrating seen_releases schema: renaming column 'first_seen_at' to 'created_at'")
+                cursor.execute("ALTER TABLE seen_releases RENAME COLUMN first_seen_at TO created_at")
+                conn.commit()
+            elif cols and "created_at" not in cols and "first_seen_at" not in cols:
+                logger.info("Migrating seen_releases schema: adding column 'created_at'")
+                cursor.execute("ALTER TABLE seen_releases ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
                 conn.commit()
 
             cursor.execute("""
